@@ -9,3 +9,4 @@ class Player:
         """
         self.piece = piece
         self.player_type = player_type
+

@@ -52,6 +52,19 @@ class TicTacToe:
         return (game_num, game_coords, curr_board, board_coords)
 
 
+    def __check_meta_game(self, player_num:int) -> bool:
+        """
+        Checks the meta game for a win or a draw and prints appropriate output.
+        """
+        if self.meta_board.winner:
+            print(f"Player {player_num} has won the Meta Game. Congratulations!")
+            return True
+        elif self.meta_board.draw:
+            print(f"The Meta Game has ended in a draw. Well played both players.")
+            return True
+        return False
+
+
     def play_move(self, player:Player, player_num:int) -> None:
         """ This function plays next move in the game
             for a given player.
@@ -77,22 +90,8 @@ class TicTacToe:
             elif curr_board.draw:
                 print(f"The game instance at board {game_num} has a draw. A new instance of the game will be started at that board.")
                 self.boards[game_coords[0]][game_coords[1]] = Board()
-            if self.check_meta_game(player_num):
+            if self.__check_meta_game(player_num):
                 self.game_over = True
         except:
             return
-
-
-    def check_meta_game(self, player_num:int) -> None:
-        """
-        Checks the meta game for a win or a draw and prints appropriate output.
-        """
-        if self.meta_board.winner:
-            print(f"Player {player_num} has won the Meta Game. Congratulations!")
-            return True
-        elif self.meta_board.draw:
-            print(f"The Meta Game has ended in a draw. Well played both players.")
-            return True
-        return False
-
 

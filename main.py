@@ -21,4 +21,3 @@ if __name__ == "__main__":
             meta_game.play_move(p2, 2)
         is_p1 = not is_p1
 
-
