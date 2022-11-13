@@ -11,8 +11,8 @@ class TicTacToe:
         self.boards = [[Board() for _ in range(3)] for _ in range(3)]
         self.meta_board = Board()
         self.game_over = False
-        # This stores the set of valid games that both players can move in
-        self.next_move = set(list(range(9)))
+        # This stores the set of valid boards that both players can move in
+        self.valid_boards = set(list(range(9)))
         self.quit = False
 
 
@@ -21,9 +21,9 @@ class TicTacToe:
             Returns game_num, game_coords, cur_board, and board_coords
         """
         game_num = None
-        valid_games = sorted(list(self.next_move))
+        valid_games = sorted(list(self.valid_boards))
         print(f"Player {player_num}'s Turn")
-        while game_num not in self.next_move:
+        while game_num not in self.valid_boards:
             try:
                 game_num = int(input(f"Select a valid game number from {valid_games}: "))
             except EOFError as e:
@@ -60,7 +60,7 @@ class TicTacToe:
             if player.player_type == "human":
                 game_num, game_coords, curr_board, board_coords = self.__human_move(player_num)
             else:
-                game_num = random.choice(list(self.next_move))
+                game_num = random.choice(list(self.valid_boards))
                 game_coords = (game_num//3, game_num%3)
                 curr_board = self.boards[game_coords[0]][game_coords[1]]
                 board_coords = random.choice(list(curr_board.empty_slots()))
@@ -69,13 +69,12 @@ class TicTacToe:
             print(f"Player {player_num} moved to {board_coords} on board {game_num}. This is how it looks:")
             print(curr_board)
             if curr_board.winner:
-                self.next_move.remove(game_num)
+                self.valid_boards.remove(game_num)
                 self.meta_board.insert(player.piece, game_coords[0], game_coords[1])
                 print(f"Player {player_num} wins the game instance at board {game_num}.")
                 print(f"This is how the meta-game board looks: ")
                 print(self.meta_board)
             elif curr_board.draw:
-                # make new board and add it to player1's next_move
                 print(f"The game instance at board {game_num} has a draw. A new instance of the game will be started at that board.")
                 self.boards[game_coords[0]][game_coords[1]] = Board()
             if self.check_meta_game(player_num):
