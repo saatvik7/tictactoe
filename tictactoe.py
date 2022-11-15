@@ -7,7 +7,7 @@ import random
 
 class TicTacToe:
     def __init__(self) -> None:
-        """ Initialize a TicTacToe object with two Player objects"""
+        """ Initialize a TicTacToe object """
         self.boards = [[Board() for _ in range(3)] for _ in range(3)]
         self.meta_board = Board()
         self.game_over = False
